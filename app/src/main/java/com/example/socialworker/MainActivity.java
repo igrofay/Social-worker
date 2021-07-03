@@ -11,4 +11,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
+
+    // Проверка данных( Логин и пароль)
+    // Отправка Get запрос (true)
+    // Отправка черз NavHost на авторизация (false)
 }

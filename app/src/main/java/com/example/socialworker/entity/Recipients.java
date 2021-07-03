@@ -1,4 +1,4 @@
-package com.example.socialworker.fragments.entity;
+package com.example.socialworker.entity;
 
 public class Recipients {
     int RecipientID ;

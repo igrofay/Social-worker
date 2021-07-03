@@ -1,4 +1,4 @@
-package com.example.socialworker.fragments.entity;
+package com.example.socialworker.entity;
 
 public class SocialWorkers {
     int SocialWorkerID;

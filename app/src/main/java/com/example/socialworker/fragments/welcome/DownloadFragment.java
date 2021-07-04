@@ -49,7 +49,7 @@ import static com.example.socialworker.Parser.parserUnit;
 import static com.example.socialworker.WelcomeActivity.APP_PREFERENCES;
 import static com.example.socialworker.WelcomeActivity.LOGIN_CASEWORKER;
 import static com.example.socialworker.WelcomeActivity.PASSWORD_CASEWORKER;
-import static com.example.socialworker.WelcomeActivity.SOCIAL_WORKER;
+
 
 
 public class DownloadFragment extends Fragment {

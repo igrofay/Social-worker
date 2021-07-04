@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "187819821618",
+    "firebase_url": "https://social-worker-1ca1a-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "social-worker-1ca1a",
+    "storage_bucket": "social-worker-1ca1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:187819821618:android:8ce8302d10738337f80a2b",
+        "android_client_info": {
+          "package_name": "com.example.socialworker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "187819821618-k9l009tb8s64pui15sq95lvlma7hso83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDim-MvdWVLLPtk8_8Xw5aPlwi00rUjQpg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "187819821618-k9l009tb8s64pui15sq95lvlma7hso83.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

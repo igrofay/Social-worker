@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.socialworker.MainActivity;
 import com.example.socialworker.R;
+import com.example.socialworker.WelcomeActivity;
 import com.example.socialworker.entity.SocialWorker;
 
 
@@ -29,8 +30,8 @@ public class ProfileFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        MainActivity mainActivity = (MainActivity) getActivity();
-        SocialWorker socialWorker = mainActivity.getSocialWorker();
+
+        SocialWorker socialWorker = WelcomeActivity.socialWorker;
 
         fioTextView = root.findViewById(R.id.fio_text_view);
         organisationTextView = root.findViewById(R.id.organisation_text_view);

@@ -36,7 +36,7 @@ public class AdapterPlannedSchedule extends RecyclerView.Adapter<AdapterPlannedS
 
     @Override
     public int getItemCount() {
-        return plannedScheduleList.size();
+        return plannedScheduleList!= null ? plannedScheduleList.size() : 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{

@@ -69,6 +69,10 @@ public class ActiveWorkFragment extends Fragment {
         if (plannedSchedule == null) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(requireContext());
             alertDialog.setTitle("Проблемка").setMessage("На данный момент у вас нет задания").show();
+            return;
         }
+        name.setText(
+                plannedSchedule.getListService().getSocialService().getSocialServiceNAME()
+        );
     }
 }

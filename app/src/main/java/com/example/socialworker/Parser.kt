@@ -1,109 +1,118 @@
-package com.example.socialworker;
+package com.example.socialworker
 
-import com.example.socialworker.entity.Form;
-import com.example.socialworker.entity.ListService;
-import com.example.socialworker.entity.PlannedSchedule;
-import com.example.socialworker.entity.Recipient;
-import com.example.socialworker.entity.RecipientDocument;
-import com.example.socialworker.entity.SocialService;
-import com.example.socialworker.entity.SocialWorker;
-import com.example.socialworker.entity.Tarif;
-import com.example.socialworker.entity.TypeSocialService;
-import com.example.socialworker.entity.Unit;
-import com.google.firebase.database.DataSnapshot;
+import com.example.socialworker.entity.*
+import com.example.socialworker.entity.Unit
+import com.google.firebase.database.DataSnapshot
 
-public class Parser {
-    public static SocialWorker parserSocialWorker(DataSnapshot data){
-        SocialWorker socialWorker = new SocialWorker();
-        socialWorker.setSocialWorkerID(Integer.parseInt(data.getKey()));
-        socialWorker.setSocialWorkerDepartment(data.child("SocialWorkerDepartment").getValue().toString());
-        socialWorker.setSocialWorkerFIO(data.child("SocialWorkerFIO").getValue().toString());
-        socialWorker.setSocialWorkerLogin(data.child("SocialWorkerLogin").getValue().toString());
-        socialWorker.setSocialWorkerOrganization(data.child("SocialWorkerOrganization").getValue().toString());
-        socialWorker.setSocialWorkerPassword(data.child("SocialWorkerPassword").getValue().toString());
-        socialWorker.setSocialWorkerPosition(data.child("SocialWorkerPosition").getValue().toString());
-        return socialWorker;
-    }
-    public static PlannedSchedule parserPlannedSchedule(DataSnapshot data){
-        PlannedSchedule plannedSchedule = new PlannedSchedule();
-        plannedSchedule.setScheduleID(Integer.parseInt(data.getKey()));
-        plannedSchedule.setScheduleEndPlanned(data.child("ScheduleEndPlanned").getValue().toString());
-        plannedSchedule.setScheduleSocialWorker(Integer.parseInt(data.child("ScheduleSocialWorker").getValue().toString()));
-        plannedSchedule.setScheduleStartPlanned(data.child("ScheduleStartPlanned").getValue().toString());
-        plannedSchedule.setScheduleStatus(Integer.parseInt(data.child("ScheduleStatus").getValue().toString())==1);
-        plannedSchedule.setScheduleRecipient(Integer.parseInt(data.child("ScheduleRecipient").getValue().toString() ));
-        return plannedSchedule ;
-    }
-    public static Recipient parserRecipient(DataSnapshot data){
-        Recipient recipient = new Recipient();
-        recipient.setRecipientID(Integer.parseInt(data.getKey()));
-        recipient.setRecipientFIO(data.child("RecipientFIO").getValue().toString());
-        recipient.setRecipientAdress(data.child("RecipientDR").getValue().toString());
-        recipient.setRecipientAdress(data.child("RecipientAdress").getValue().toString());
-        recipient.setRecipientAdressLatitude(data.child("RecipientAdressLatitude").getValue().toString());
-        recipient.setRecipientAdressLongitude(data.child("RecipientAdressLongitude").getValue().toString());
-        recipient.setRecipientContact(data.child("RecipientContact").getValue().toString());
-        recipient.setRecipientQRCode(data.child("RecipientQRCode").getValue().toString());
-        return recipient ;
-    }
-    public static ListService parserListService(DataSnapshot data ){
-        ListService listService = new ListService();
-        listService.setListServiceID(Integer.parseInt(data.getKey()));
-        listService.setServicePlannedSchedule(Integer.parseInt(data.child("ServicePlannedSchedule").getValue().toString()));
-        listService.setSocialServices_id(Integer.parseInt(data.child("SocialServices").getValue().toString()));
-        listService.setListServiceVolume(Integer.parseInt(data.child("ListServiceVolume").getValue().toString()));
-        listService.setListServiceScope(Long.parseLong(data.child("ListServiceScope").getValue().toString()));
-        return listService;
-    }
-    public static RecipientDocument parserRecipientDocument(DataSnapshot data){
-        RecipientDocument recipientDocument = new RecipientDocument();
-        recipientDocument.setRecipientDocumentID(Integer.parseInt(data.getKey()));
-        recipientDocument.setRecipientDocumentRecipient(Integer.parseInt(data.child("RecipientDocumentRecipient").getValue().toString()));
-        recipientDocument.setRecipientDocumentNum(data.child("RecipientDocumentNum").getValue().toString());
-        recipientDocument.setRecipientDocumentStartDate(data.child("RecipientDocumentStartDate").getValue().toString());
-        recipientDocument.setRecipientDocumentEndDate(data.child("RecipientDocumentEndDate").getValue().toString());
-        recipientDocument.setRecipientDocumentStaus(Integer.parseInt(data.child("RecipientDocumentStaus").getValue().toString())==1);
-        return recipientDocument ;
+object Parser {
+    @JvmStatic
+    fun parserSocialWorker(data: DataSnapshot): SocialWorker {
+        val socialWorker = SocialWorker()
+        socialWorker.socialWorkerID = data.key!!.toInt()
+        socialWorker.socialWorkerDepartment = data.child("SocialWorkerDepartment").value.toString()
+        socialWorker.socialWorkerFIO = data.child("SocialWorkerFIO").value.toString()
+        socialWorker.socialWorkerLogin = data.child("SocialWorkerLogin").value.toString()
+        socialWorker.socialWorkerOrganization = data.child("SocialWorkerOrganization").value.toString()
+        socialWorker.socialWorkerPassword = data.child("SocialWorkerPassword").value.toString()
+        socialWorker.socialWorkerPosition = data.child("SocialWorkerPosition").value.toString()
+        return socialWorker
     }
 
-    public static SocialService parserSocialService(DataSnapshot data){
-        SocialService socialService = new SocialService();
-        socialService.setSocialServiceID(Integer.parseInt(data.getKey()));
-        socialService.setSocialServiceCode(data.child("SocialServiceCode").getValue().toString());
-        socialService.setSocialServiceNAME(data.child("SocialServiceNAME").getValue().toString());
-        socialService.setSocialServiceForm(Integer.parseInt(data.child("SocialServiceForm").getValue().toString()));
-        socialService.setSocialServiceType(Integer.parseInt(data.child("SocialServiceType").getValue().toString()));
-        socialService.setSocialServiceExecutionTime(data.child("SocialServiceExecutionTime").getValue().toString());
-        socialService.setSocialServiceTypeTarif(Integer.parseInt(data.child("SocialServiceTypeTarif").getValue().toString()));
-        return socialService ;
-    }
-    public static Form parserForm(DataSnapshot data){
-        Form form = new Form();
-        form.setFormID(Integer.parseInt(data.getKey()));
-        form.setFormNAME(data.child("FormNAME").getValue().toString());
-        return form;
-    }
-    public static TypeSocialService parserTypeSocialService(DataSnapshot data){
-        TypeSocialService typeSocialService = new TypeSocialService();
-        typeSocialService.setTypeID(Integer.parseInt(data.getKey()));
-        typeSocialService.setTypeNAME(data.child("TypeNAME").getValue().toString());
-        return typeSocialService ;
+    @JvmStatic
+    fun parserPlannedSchedule(data: DataSnapshot): PlannedSchedule {
+        val plannedSchedule = PlannedSchedule()
+        plannedSchedule.scheduleID = data.key!!.toInt()
+        plannedSchedule.scheduleEndPlanned = data.child("ScheduleEndPlanned").value.toString()
+        plannedSchedule.scheduleSocialWorker = data.child("ScheduleSocialWorker").value.toString().toInt()
+        plannedSchedule.scheduleStartPlanned = data.child("ScheduleStartPlanned").value.toString()
+        plannedSchedule.isScheduleStatus = data.child("ScheduleStatus").value.toString().toInt() == 1
+        plannedSchedule.scheduleRecipient = data.child("ScheduleRecipient").value.toString().toInt()
+        return plannedSchedule
     }
 
-    public static Tarif parserTarif(DataSnapshot data){
-        Tarif tarif = new Tarif() ;
-        tarif.setTarifID(Integer.parseInt(data.getKey()));
-        tarif.setTarifSocialServiceID(Integer.parseInt(data.child("TarifSocialServiceID").getValue().toString()));
-        tarif.setSocialServiceUnit(Integer.parseInt(data.child("SocialServiceUnit").getValue().toString()));
-        tarif.setTarifStart(data.child("TarifStart").getValue().toString());
-        tarif.setTarifEnd(data.child("TarifEnd").getValue().toString());
-        tarif.setTarifPrice(data.child("TarifPric").getValue().toString());
-        return tarif ;
+    @JvmStatic
+    fun parserRecipient(data: DataSnapshot): Recipient {
+        val recipient = Recipient()
+        recipient.recipientID = data.key!!.toInt()
+        recipient.recipientFIO = data.child("RecipientFIO").value.toString()
+        recipient.recipientAdress = data.child("RecipientDR").value.toString()
+        recipient.recipientAdress = data.child("RecipientAdress").value.toString()
+        recipient.recipientAdressLatitude = data.child("RecipientAdressLatitude").value.toString()
+        recipient.recipientAdressLongitude = data.child("RecipientAdressLongitude").value.toString()
+        recipient.recipientContact = data.child("RecipientContact").value.toString()
+        recipient.recipientQRCode = data.child("RecipientQRCode").value.toString()
+        return recipient
     }
-    public static Unit parserUnit(DataSnapshot data){
-        Unit unit = new Unit();
-        unit.setUnitID(Integer.parseInt(data.getKey()));
-        unit.setUnitNAME(data.child("UnitNAME").getValue().toString());
-        return unit;
+
+    @JvmStatic
+    fun parserListService(data: DataSnapshot): ListService {
+        val listService = ListService()
+        listService.listServiceID = data.key!!.toInt()
+        listService.servicePlannedSchedule = data.child("ServicePlannedSchedule").value.toString().toInt()
+        listService.socialServices_id = data.child("SocialServices").value.toString().toInt()
+        listService.listServiceVolume = data.child("ListServiceVolume").value.toString().toInt()
+        listService.listServiceScope = data.child("ListServiceScope").value.toString().toLong()
+        return listService
+    }
+
+    @JvmStatic
+    fun parserRecipientDocument(data: DataSnapshot): RecipientDocument {
+        val recipientDocument = RecipientDocument()
+        recipientDocument.recipientDocumentID = data.key!!.toInt()
+        recipientDocument.recipientDocumentRecipient = data.child("RecipientDocumentRecipient").value.toString().toInt()
+        recipientDocument.recipientDocumentNum = data.child("RecipientDocumentNum").value.toString()
+        recipientDocument.recipientDocumentStartDate = data.child("RecipientDocumentStartDate").value.toString()
+        recipientDocument.recipientDocumentEndDate = data.child("RecipientDocumentEndDate").value.toString()
+        recipientDocument.isRecipientDocumentStaus = data.child("RecipientDocumentStaus").value.toString().toInt() == 1
+        return recipientDocument
+    }
+
+    @JvmStatic
+    fun parserSocialService(data: DataSnapshot): SocialService {
+        val socialService = SocialService()
+        socialService.socialServiceID = data.key!!.toInt()
+        socialService.socialServiceCode = data.child("SocialServiceCode").value.toString()
+        socialService.socialServiceNAME = data.child("SocialServiceNAME").value.toString()
+        socialService.socialServiceForm = data.child("SocialServiceForm").value.toString().toInt()
+        socialService.socialServiceType = data.child("SocialServiceType").value.toString().toInt()
+        socialService.socialServiceExecutionTime = data.child("SocialServiceExecutionTime").value.toString()
+        socialService.socialServiceTypeTarif = data.child("SocialServiceTypeTarif").value.toString().toInt()
+        return socialService
+    }
+
+    @JvmStatic
+    fun parserForm(data: DataSnapshot): Form {
+        val form = Form()
+        form.formID = data.key!!.toInt()
+        form.formNAME = data.child("FormNAME").value.toString()
+        return form
+    }
+
+    @JvmStatic
+    fun parserTypeSocialService(data: DataSnapshot): TypeSocialService {
+        val typeSocialService = TypeSocialService()
+        typeSocialService.typeID = data.key!!.toInt()
+        typeSocialService.typeNAME = data.child("TypeNAME").value.toString()
+        return typeSocialService
+    }
+
+    @JvmStatic
+    fun parserTarif(data: DataSnapshot): Tarif {
+        val tarif = Tarif()
+        tarif.tarifID = data.key!!.toInt()
+        tarif.tarifSocialServiceID = data.child("TarifSocialServiceID").value.toString().toInt()
+        tarif.socialServiceUnit = data.child("SocialServiceUnit").value.toString().toInt()
+        tarif.tarifStart = data.child("TarifStart").value.toString()
+        tarif.tarifEnd = data.child("TarifEnd").value.toString()
+        tarif.tarifPrice = data.child("TarifPric").value.toString()
+        return tarif
+    }
+
+    @JvmStatic
+    fun parserUnit(data: DataSnapshot): Unit {
+        val unit = Unit()
+        unit.unitID = data.key!!.toInt()
+        unit.unitNAME = data.child("UnitNAME").value.toString()
+        return unit
     }
 }

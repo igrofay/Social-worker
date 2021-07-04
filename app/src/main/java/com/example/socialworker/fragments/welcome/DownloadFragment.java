@@ -78,6 +78,7 @@ public class DownloadFragment extends Fragment {
     }
     void authorization(String log , String password){
         FirebaseDatabase firebaseApp = FirebaseDatabase.getInstance();
+        firebaseApp.setPersistenceEnabled(true);
         firebaseApp.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

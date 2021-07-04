@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.util.List;
 
 //Социальный работник
-public class SocialWorker implements Parcelable {
+public class SocialWorker{
     private int socialWorkerID;
     private String socialWorkerFIO ;
     private String socialWorkerLogin;
@@ -19,28 +19,7 @@ public class SocialWorker implements Parcelable {
 
 
     public  SocialWorker(){}
-    protected SocialWorker(Parcel in) {
-        socialWorkerID = in.readInt();
-        socialWorkerFIO = in.readString();
-        socialWorkerLogin = in.readString();
-        socialWorkerPassword = in.readString();
-        socialWorkerPosition = in.readString();
-        socialWorkerDepartment = in.readString();
-        socialWorkerOrganization = in.readString();
-        plannedScheduleList = in.createTypedArrayList(PlannedSchedule.CREATOR);
-    }
 
-    public static final Creator<SocialWorker> CREATOR = new Creator<SocialWorker>() {
-        @Override
-        public SocialWorker createFromParcel(Parcel in) {
-            return new SocialWorker(in);
-        }
-
-        @Override
-        public SocialWorker[] newArray(int size) {
-            return new SocialWorker[size];
-        }
-    };
 
     public int getSocialWorkerID() {
         return socialWorkerID;
@@ -106,20 +85,5 @@ public class SocialWorker implements Parcelable {
         this.plannedScheduleList = plannedScheduleList;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(socialWorkerID);
-        dest.writeString(socialWorkerFIO);
-        dest.writeString(socialWorkerLogin);
-        dest.writeString(socialWorkerPassword);
-        dest.writeString(socialWorkerPosition);
-        dest.writeString(socialWorkerDepartment);
-        dest.writeString(socialWorkerOrganization);
-        dest.writeTypedList(plannedScheduleList);
-    }
 }

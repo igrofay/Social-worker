@@ -5,7 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 // Социальные услуги, справочник
-public class SocialService implements Parcelable {
+public class SocialService  {
     private int socialServiceID ;
     private String socialServiceCode;
     private String socialServiceNAME ;
@@ -32,37 +32,6 @@ public class SocialService implements Parcelable {
         typeSocialService = in.readParcelable(TypeSocialService.class.getClassLoader());
         tarif = in.readParcelable(Tarif.class.getClassLoader());
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(socialServiceID);
-        dest.writeString(socialServiceCode);
-        dest.writeString(socialServiceNAME);
-        dest.writeInt(socialServiceForm);
-        dest.writeInt(socialServiceType);
-        dest.writeString(socialServiceExecutionTime);
-        dest.writeInt(socialServiceTypeTarif);
-        dest.writeParcelable(form, flags);
-        dest.writeParcelable(typeSocialService, flags);
-        dest.writeParcelable(tarif, flags);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<SocialService> CREATOR = new Creator<SocialService>() {
-        @Override
-        public SocialService createFromParcel(Parcel in) {
-            return new SocialService(in);
-        }
-
-        @Override
-        public SocialService[] newArray(int size) {
-            return new SocialService[size];
-        }
-    };
 
     public int getSocialServiceTypeTarif() {
         return socialServiceTypeTarif;

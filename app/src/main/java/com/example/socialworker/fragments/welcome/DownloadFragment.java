@@ -72,7 +72,6 @@ public class DownloadFragment extends Fragment {
 
     void finishActivity(){
         Intent intent = new Intent(requireActivity() , MainActivity.class);
-       // intent.putExtra(SOCIAL_WORKER , WelcomeActivity.socialWorker);
         startActivity(intent);
         requireActivity().finish();
     }

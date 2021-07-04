@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 // "Кусок" календарного плана
-public class PlannedSchedule implements Parcelable {
+public class PlannedSchedule{
     private int scheduleID;
     private int scheduleRecipient; // Получатель социальных услуг, ссылается на Recipient (ID)
     private int scheduleSocialWorker ; // Социальный работник, ссылается на SocialWorker(ID)
@@ -28,32 +28,7 @@ public class PlannedSchedule implements Parcelable {
         listService = in.readParcelable(ListService.class.getClassLoader());
     }
 
-    public static final Creator<PlannedSchedule> CREATOR = new Creator<PlannedSchedule>() {
-        @Override
-        public PlannedSchedule createFromParcel(Parcel in) {
-            return new PlannedSchedule(in);
-        }
 
-        @Override
-        public PlannedSchedule[] newArray(int size) {
-            return new PlannedSchedule[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(scheduleID);
-        dest.writeInt(scheduleRecipient);
-        dest.writeInt(scheduleSocialWorker);
-        dest.writeString(scheduleStartPlanned);
-        dest.writeString(scheduleEndPlanned);
-        dest.writeByte((byte) (scheduleStatus ? 1 : 0));
-    }
 
     public int getScheduleID() {
         return scheduleID;
@@ -119,7 +94,4 @@ public class PlannedSchedule implements Parcelable {
         this.listService = listService;
     }
 
-    public static Creator<PlannedSchedule> getCREATOR() {
-        return CREATOR;
-    }
 }

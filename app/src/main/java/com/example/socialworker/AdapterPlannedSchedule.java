@@ -60,6 +60,7 @@ public class AdapterPlannedSchedule extends RecyclerView.Adapter<AdapterPlannedS
                             plannedSchedule.isScheduleStatus() ? R.drawable.round_outline_blue : R.drawable.round_outline_red
                     )
             );
+
         }
     }
 

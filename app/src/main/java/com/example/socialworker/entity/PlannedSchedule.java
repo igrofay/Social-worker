@@ -5,15 +5,15 @@ import android.os.Parcelable;
 
 // "Кусок" календарного плана
 public class PlannedSchedule implements Parcelable {
-    int scheduleID;
-    int scheduleRecipient; // Получатель социальных услуг, ссылается на Recipient (ID)
-    int scheduleSocialWorker ; // Социальный работник, ссылается на SocialWorker(ID)
-    String scheduleStartPlanned; // Плановые дата и время начала предоставления социальных услуг, тип DateTime
-    String scheduleEndPlanned ; // Плановые дата и время окончания предоставления социальных услуг, тип DateTime
-    boolean scheduleStatus ; // Статус элемента true = действует ; false = не действует
+    private int scheduleID;
+    private int scheduleRecipient; // Получатель социальных услуг, ссылается на Recipient (ID)
+    private int scheduleSocialWorker ; // Социальный работник, ссылается на SocialWorker(ID)
+    private String scheduleStartPlanned; // Плановые дата и время начала предоставления социальных услуг, тип DateTime
+    private String scheduleEndPlanned ; // Плановые дата и время окончания предоставления социальных услуг, тип DateTime
+    private boolean scheduleStatus ; // Статус элемента true = действует ; false = не действует
 
-    Recipient recipient; // Получение через ID
-    ListService listService; // Получению по полю ServicePlannedSchedule
+    private Recipient recipient; // Получение через ID
+    private ListService listService; // Получению по полю ServicePlannedSchedule
     public  PlannedSchedule(){}
 
 

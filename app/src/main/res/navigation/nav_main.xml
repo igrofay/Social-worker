@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/plannedSchedulsFragment">
+
+    <fragment
+        android:id="@+id/plannedSchedulsFragment"
+        android:name="com.example.socialworker.fragments.main.PlannedSchedulsFragment"
+        android:label="fragment_planned_scheduls"
+        tools:layout="@layout/fragment_planned_scheduls" >
+        <action
+            android:id="@+id/action_plannedSchedulsFragment_to_fullInformationFragment"
+            app:destination="@id/fullInformationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.socialworker.fragments.main.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/fullInformationFragment"
+        android:name="com.example.socialworker.fragments.main.FullInformationFragment"
+        android:label="fragment_full_information"
+        tools:layout="@layout/fragment_full_information" />
+</navigation>

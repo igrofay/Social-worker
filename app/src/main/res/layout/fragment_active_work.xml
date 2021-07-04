@@ -62,9 +62,10 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/t_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="Название"
                 android:textSize="22dp" />
 
@@ -74,9 +75,10 @@
                 android:minHeight="2dp" />
 
             <TextView
-                android:id="@+id/textView23"
+                android:id="@+id/t_forma"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="Форма:"
                 android:textSize="18sp" />
 
@@ -86,9 +88,10 @@
                 android:minHeight="2dp" />
 
             <TextView
-                android:id="@+id/textView18"
+                android:id="@+id/t_recip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="Кому:"
                 android:textSize="18sp" />
 
@@ -98,9 +101,10 @@
                 android:minHeight="2dp" />
 
             <TextView
-                android:id="@+id/textView19"
+                android:id="@+id/t_adress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="Адрес:"
                 android:textSize="18sp" />
 
@@ -110,9 +114,10 @@
                 android:minHeight="2dp" />
 
             <TextView
-                android:id="@+id/textView20"
+                android:id="@+id/t_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="Регламент:"
                 android:textSize="18sp" />
 
@@ -122,9 +127,10 @@
                 android:minHeight="2dp" />
 
             <TextView
-                android:id="@+id/textView21"
+                android:id="@+id/t_tarif"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="Тариф:"
                 android:textSize="18sp" />
 
@@ -134,7 +140,7 @@
                 android:minHeight="2dp" />
 
             <TextView
-                android:id="@+id/textView22"
+                android:id="@+id/t_unit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ед. измерения:"

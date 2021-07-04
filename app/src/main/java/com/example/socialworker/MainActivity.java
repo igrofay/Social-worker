@@ -14,7 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import static com.example.socialworker.WelcomeActivity.SOCIAL_WORKER;
 
 public class MainActivity extends AppCompatActivity {
-    SocialWorker socialWorker ;
+    public SocialWorker socialWorker ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

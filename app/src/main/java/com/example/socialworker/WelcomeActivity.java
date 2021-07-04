@@ -12,7 +12,7 @@ public class WelcomeActivity extends AppCompatActivity {
     public static final String LOGIN_CASEWORKER = "LOGIN_CASEWORKER=LOGIN_CASEWORKER";
     public static final String PASSWORD_CASEWORKER = "PASSWORD_CASEWORKER=PASSWORD_CASEWORKER" ;
     public static final String SOCIAL_WORKER = "SOCIAL_WORKER=SOCIAL_WORKER";
-    public SocialWorker socialWorker ;
+    public static SocialWorker socialWorker ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

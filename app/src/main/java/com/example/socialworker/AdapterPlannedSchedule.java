@@ -16,7 +16,9 @@ import java.util.List;
 
 public class AdapterPlannedSchedule extends RecyclerView.Adapter<AdapterPlannedSchedule.ViewHolder> {
     List<PlannedSchedule> plannedScheduleList ;
-
+    public AdapterPlannedSchedule(List<PlannedSchedule> plannedScheduleList){
+        this.plannedScheduleList = plannedScheduleList;
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

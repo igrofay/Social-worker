@@ -72,7 +72,7 @@ public class DownloadFragment extends Fragment {
 
     void finishActivity(){
         Intent intent = new Intent(requireActivity() , MainActivity.class);
-        intent.putExtra(SOCIAL_WORKER , ((WelcomeActivity) requireActivity()).socialWorker);
+       // intent.putExtra(SOCIAL_WORKER , WelcomeActivity.socialWorker);
         startActivity(intent);
         requireActivity().finish();
     }
@@ -88,10 +88,10 @@ public class DownloadFragment extends Fragment {
                     String passwordData = child.child("SocialWorkerPassword").getValue().toString();
                     if(log.equals(logData) && password.equals(passwordData)){
                         SocialWorker socialWorker = parserSocialWorker(child);
-                        ((WelcomeActivity) requireActivity()).socialWorker = socialWorker;
-                        downloadPlannedSchedule(snapshot , socialWorker.getSocialWorkerID());
+                        WelcomeActivity.socialWorker = socialWorker;
+                        socialWorker.setPlannedScheduleList(downloadPlannedSchedule(snapshot , socialWorker.getSocialWorkerID()));
                         finishActivity();
-                        return;
+                        break;
                     }
 
                 }
@@ -112,8 +112,10 @@ public class DownloadFragment extends Fragment {
             if(id_ScheduleSocialWorker == id_){
                 PlannedSchedule plannedSchedule = parserPlannedSchedule(child);
                 plannedScheduleList.add(plannedSchedule);
+                downloadAdditionalData(dataMain , plannedSchedule);
             }
         }
+
         return plannedScheduleList;
     }
 
@@ -177,11 +179,14 @@ public class DownloadFragment extends Fragment {
         }
         // Получить Unit
         for (DataSnapshot child : dataMain.child("Units").getChildren()){
-            if(Integer.parseInt(child.getKey())== plannedSchedule.getListService().getSocialService().getTarif().getSocialServiceUnit()){
-                Unit unit = parserUnit(child);
-                plannedSchedule.getListService().getSocialService().getTarif().setUnit(unit);
-                break;
-            }
+            try {
+                if(Integer.parseInt(child.getKey())== plannedSchedule.getListService().getSocialService().getTarif().getSocialServiceUnit()){
+                    Unit unit = parserUnit(child);
+                    plannedSchedule.getListService().getSocialService().getTarif().setUnit(unit);
+                    break;
+                }
+            }catch (Exception ignored){ }
+
         }
 
     }

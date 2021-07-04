@@ -3,6 +3,7 @@ package com.example.socialworker
 import com.example.socialworker.entity.*
 import com.example.socialworker.entity.Unit
 import com.google.firebase.database.DataSnapshot
+import java.lang.Exception
 
 object Parser {
     @JvmStatic
@@ -76,7 +77,7 @@ object Parser {
         socialService.socialServiceForm = data.child("SocialServiceForm").value.toString().toInt()
         socialService.socialServiceType = data.child("SocialServiceType").value.toString().toInt()
         socialService.socialServiceExecutionTime = data.child("SocialServiceExecutionTime").value.toString()
-        socialService.socialServiceTypeTarif = data.child("SocialServiceTypeTarif").value.toString().toInt()
+        socialService.socialServiceTypeTarif = try { data.child("SocialServiceTypeTarif").value.toString().toInt() }catch (e:Exception){0}
         return socialService
     }
 

@@ -74,5 +74,8 @@ public class ActiveWorkFragment extends Fragment {
         name.setText(
                 plannedSchedule.getListService().getSocialService().getSocialServiceNAME()
         );
+        recip.setText(
+                plannedSchedule.getRecipient().getRecipientFIO()
+        );
     }
 }

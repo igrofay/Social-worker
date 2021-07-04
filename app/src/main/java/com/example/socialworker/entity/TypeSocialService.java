@@ -5,8 +5,8 @@ import android.os.Parcelable;
 
 //Вид социальных улсуг, справочник
 public class TypeSocialService implements Parcelable {
-    int typeID;
-    String typeNAME ;
+    private int typeID;
+    private String typeNAME ;
 
     public TypeSocialService(){}
     protected TypeSocialService(Parcel in) {
@@ -35,5 +35,21 @@ public class TypeSocialService implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(typeID);
         dest.writeString(typeNAME);
+    }
+
+    public int getTypeID() {
+        return typeID;
+    }
+
+    public void setTypeID(int typeID) {
+        this.typeID = typeID;
+    }
+
+    public String getTypeNAME() {
+        return typeNAME;
+    }
+
+    public void setTypeNAME(String typeNAME) {
+        this.typeNAME = typeNAME;
     }
 }

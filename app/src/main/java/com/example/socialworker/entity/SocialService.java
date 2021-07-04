@@ -6,16 +6,17 @@ import android.os.Parcelable;
 
 // Социальные услуги, справочник
 public class SocialService implements Parcelable {
-    int socialServiceID ;
-    String socialServiceCode;
-    String socialServiceNAME ;
-    int socialServiceForm ; // Форма социальной услуги, ссылается на Forms(ID)
-    int socialServiceType ; // Форма социальной услуги, ссылается на TypeSocialService(ID)
-    int socialServiceExecutionTime ;// Лимит времени оказания услуги (в минутах)
+    private int socialServiceID ;
+    private String socialServiceCode;
+    private String socialServiceNAME ;
+    private int socialServiceForm ; // Форма социальной услуги, ссылается на Forms(ID)
+    private int socialServiceType ; // Форма социальной услуги, ссылается на TypeSocialService(ID)
+    private String socialServiceExecutionTime ;// Лимит времени оказания услуги (в минутах)
+    private int socialServiceTypeTarif ;
 
-    Form form ; // Получение по ID
-    TypeSocialService typeSocialService; // Получение по ID
-    Tarif tarif ; // Получение по TarifSocialServiceID
+    private Form form ; // Получение по ID
+    private TypeSocialService typeSocialService; // Получение по ID
+    private Tarif tarif ; // Получение по TarifSocialServiceID
 
     public SocialService(){}
 
@@ -25,10 +26,30 @@ public class SocialService implements Parcelable {
         socialServiceNAME = in.readString();
         socialServiceForm = in.readInt();
         socialServiceType = in.readInt();
-        socialServiceExecutionTime = in.readInt();
+        socialServiceExecutionTime = in.readString();
+        socialServiceTypeTarif = in.readInt();
         form = in.readParcelable(Form.class.getClassLoader());
         typeSocialService = in.readParcelable(TypeSocialService.class.getClassLoader());
         tarif = in.readParcelable(Tarif.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(socialServiceID);
+        dest.writeString(socialServiceCode);
+        dest.writeString(socialServiceNAME);
+        dest.writeInt(socialServiceForm);
+        dest.writeInt(socialServiceType);
+        dest.writeString(socialServiceExecutionTime);
+        dest.writeInt(socialServiceTypeTarif);
+        dest.writeParcelable(form, flags);
+        dest.writeParcelable(typeSocialService, flags);
+        dest.writeParcelable(tarif, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<SocialService> CREATOR = new Creator<SocialService>() {
@@ -43,21 +64,84 @@ public class SocialService implements Parcelable {
         }
     };
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public int getSocialServiceTypeTarif() {
+        return socialServiceTypeTarif;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(socialServiceID);
-        dest.writeString(socialServiceCode);
-        dest.writeString(socialServiceNAME);
-        dest.writeInt(socialServiceForm);
-        dest.writeInt(socialServiceType);
-        dest.writeInt(socialServiceExecutionTime);
-        dest.writeParcelable(form, flags);
-        dest.writeParcelable(typeSocialService, flags);
-        dest.writeParcelable(tarif, flags);
+    public void setSocialServiceTypeTarif(int socialServiceTypeTarif) {
+        this.socialServiceTypeTarif = socialServiceTypeTarif;
+    }
+
+
+    public int getSocialServiceID() {
+        return socialServiceID;
+    }
+
+    public void setSocialServiceID(int socialServiceID) {
+        this.socialServiceID = socialServiceID;
+    }
+
+    public String getSocialServiceCode() {
+        return socialServiceCode;
+    }
+
+    public void setSocialServiceCode(String socialServiceCode) {
+        this.socialServiceCode = socialServiceCode;
+    }
+
+    public String getSocialServiceNAME() {
+        return socialServiceNAME;
+    }
+
+    public void setSocialServiceNAME(String socialServiceNAME) {
+        this.socialServiceNAME = socialServiceNAME;
+    }
+
+    public int getSocialServiceForm() {
+        return socialServiceForm;
+    }
+
+    public void setSocialServiceForm(int socialServiceForm) {
+        this.socialServiceForm = socialServiceForm;
+    }
+
+    public int getSocialServiceType() {
+        return socialServiceType;
+    }
+
+    public void setSocialServiceType(int socialServiceType) {
+        this.socialServiceType = socialServiceType;
+    }
+
+    public String getSocialServiceExecutionTime() {
+        return socialServiceExecutionTime;
+    }
+
+    public void setSocialServiceExecutionTime(String socialServiceExecutionTime) {
+        this.socialServiceExecutionTime = socialServiceExecutionTime;
+    }
+
+    public Form getForm() {
+        return form;
+    }
+
+    public void setForm(Form form) {
+        this.form = form;
+    }
+
+    public TypeSocialService getTypeSocialService() {
+        return typeSocialService;
+    }
+
+    public void setTypeSocialService(TypeSocialService typeSocialService) {
+        this.typeSocialService = typeSocialService;
+    }
+
+    public Tarif getTarif() {
+        return tarif;
+    }
+
+    public void setTarif(Tarif tarif) {
+        this.tarif = tarif;
     }
 }

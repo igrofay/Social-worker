@@ -5,14 +5,14 @@ import android.os.Parcelable;
 
 // Форма социального обслуживания, справочник
 public class Form implements Parcelable {
-    int formID;
-    String formNAME;
+    private int formID;
+    private String formNAME;
 
     protected Form(Parcel in) {
         formID = in.readInt();
         formNAME = in.readString();
     }
-
+    public Form(){}
     public static final Creator<Form> CREATOR = new Creator<Form>() {
         @Override
         public Form createFromParcel(Parcel in) {
@@ -34,5 +34,21 @@ public class Form implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(formID);
         dest.writeString(formNAME);
+    }
+
+    public int getFormID() {
+        return formID;
+    }
+
+    public void setFormID(int formID) {
+        this.formID = formID;
+    }
+
+    public String getFormNAME() {
+        return formNAME;
+    }
+
+    public void setFormNAME(String formNAME) {
+        this.formNAME = formNAME;
     }
 }

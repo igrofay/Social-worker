@@ -13,28 +13,43 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.socialworker.MainActivity;
 import com.example.socialworker.R;
 import com.example.socialworker.WelcomeActivity;
+import com.example.socialworker.entity.Form;
+import com.example.socialworker.entity.ListService;
+import com.example.socialworker.entity.PlannedSchedule;
+import com.example.socialworker.entity.Recipient;
+import com.example.socialworker.entity.RecipientDocument;
+import com.example.socialworker.entity.SocialService;
 import com.example.socialworker.entity.SocialWorker;
-import com.google.firebase.FirebaseApp;
+import com.example.socialworker.entity.Tarif;
+import com.example.socialworker.entity.TypeSocialService;
+import com.example.socialworker.entity.Unit;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.EventListener;
-
+import static com.example.socialworker.Parser.parserForm;
+import static com.example.socialworker.Parser.parserListService;
+import static com.example.socialworker.Parser.parserPlannedSchedule;
+import static com.example.socialworker.Parser.parserRecipient;
+import static com.example.socialworker.Parser.parserRecipientDocument;
+import static com.example.socialworker.Parser.parserSocialService;
 import static com.example.socialworker.Parser.parserSocialWorker;
+import static com.example.socialworker.Parser.parserTarif;
+import static com.example.socialworker.Parser.parserTypeSocialService;
+import static com.example.socialworker.Parser.parserUnit;
 import static com.example.socialworker.WelcomeActivity.APP_PREFERENCES;
 import static com.example.socialworker.WelcomeActivity.LOGIN_CASEWORKER;
 import static com.example.socialworker.WelcomeActivity.PASSWORD_CASEWORKER;
+import static com.example.socialworker.WelcomeActivity.SOCIAL_WORKER;
 
 
 public class DownloadFragment extends Fragment {
@@ -57,21 +72,24 @@ public class DownloadFragment extends Fragment {
 
     void finishActivity(){
         Intent intent = new Intent(requireActivity() , MainActivity.class);
+        intent.putExtra(SOCIAL_WORKER , ((WelcomeActivity) requireActivity()).socialWorker);
         startActivity(intent);
         requireActivity().finish();
     }
     void authorization(String log , String password){
         FirebaseDatabase firebaseApp = FirebaseDatabase.getInstance();
-        firebaseApp.getReference("SocialWorkers").addListenerForSingleValueEvent(new ValueEventListener() {
+        firebaseApp.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot child: snapshot.getChildren()){
+
+                for(DataSnapshot child: snapshot.child("SocialWorkers").getChildren()){
                     String logData = child.child("SocialWorkerLogin").getValue().toString();
                     String passwordData = child.child("SocialWorkerPassword").getValue().toString();
                     if(log.equals(logData) && password.equals(passwordData)){
                         SocialWorker socialWorker = parserSocialWorker(child);
                         ((WelcomeActivity) requireActivity()).socialWorker = socialWorker;
-                        downloadAllData(socialWorker);
+                        downloadPlannedSchedule(snapshot , socialWorker.getSocialWorkerID());
+                        finishActivity();
                         return;
                     }
 
@@ -86,7 +104,84 @@ public class DownloadFragment extends Fragment {
         });
     }
 
-    void downloadAllData(SocialWorker socialWorker){
+    List<PlannedSchedule> downloadPlannedSchedule(DataSnapshot dataMain , int id_ ){
+        List<PlannedSchedule> plannedScheduleList  = new ArrayList<>();
+        for(DataSnapshot child: dataMain.child("PlannedScheduls").getChildren()){
+            int id_ScheduleSocialWorker = Integer.parseInt(child.child("ScheduleSocialWorker").getValue().toString()) ;
+            if(id_ScheduleSocialWorker == id_){
+                PlannedSchedule plannedSchedule = parserPlannedSchedule(child);
+                plannedScheduleList.add(plannedSchedule);
+            }
+        }
+        return plannedScheduleList;
+    }
+
+    void downloadAdditionalData(DataSnapshot dataMain , PlannedSchedule plannedSchedule){
+        // Получить Recipient
+        for (DataSnapshot child : dataMain.child("Recipients").getChildren() ){
+            if(Integer.parseInt(child.getKey()) == plannedSchedule.getScheduleRecipient()){
+                Recipient recipient = parserRecipient(child) ;
+                plannedSchedule.setRecipient(recipient);
+                break;
+            }
+        }
+        // Получить ListService
+        for (DataSnapshot child: dataMain.child("ListServices").getChildren()){
+            int id_ListService = Integer.parseInt(child.child("ServicePlannedSchedule").getValue().toString());
+            if(id_ListService==plannedSchedule.getScheduleRecipient()){
+                ListService listService = parserListService(child);
+                plannedSchedule.setListService(listService);
+                break;
+            }
+        }
+        // Получить RecipientDocument
+        for (DataSnapshot child : dataMain.child("RecipientDocuments").getChildren()){
+            int id_RecipientDocument = Integer.parseInt(child.child("RecipientDocumentRecipient").getValue().toString());
+            if(id_RecipientDocument == plannedSchedule.getRecipient().getRecipientID()){
+                RecipientDocument recipientDocument = parserRecipientDocument(child);
+                plannedSchedule.getRecipient().setRecipientDocument(recipientDocument);
+                break;
+            }
+        }
+        // Получить SocialService
+        for (DataSnapshot child : dataMain.child("SocialServices").getChildren()){
+            if(Integer.parseInt(child.getKey()) == plannedSchedule.getListService().getSocialServices_id()){
+                SocialService socialService = parserSocialService(child);
+                plannedSchedule.getListService().setSocialService(socialService);
+            }
+        }
+        // Получить Form
+        for (DataSnapshot child : dataMain.child("Forms").getChildren()){
+            if(Integer.parseInt(child.getKey()) == plannedSchedule.getListService().getSocialService().getSocialServiceForm()){
+                Form form = parserForm(child);
+                plannedSchedule.getListService().getSocialService().setForm(form);
+                break;
+            }
+        }
+        // Получить TypeSocialService
+        for (DataSnapshot data : dataMain.child("TypeSocialServices").getChildren()){
+            if(Integer.parseInt(data.getKey())== plannedSchedule.getListService().getSocialService().getSocialServiceType()){
+                TypeSocialService typeSocialService = parserTypeSocialService(data);
+                plannedSchedule.getListService().getSocialService().setTypeSocialService(typeSocialService);
+                break;
+            }
+        }
+        // Получить Tarif
+        for (DataSnapshot child : dataMain.child("Tarifs").getChildren()){
+            if(Integer.parseInt(child.getKey())== plannedSchedule.getListService().getSocialService().getSocialServiceTypeTarif()){
+                Tarif tarif  = parserTarif(child) ;
+                plannedSchedule.getListService().getSocialService().setTarif(tarif);
+                break;
+            }
+        }
+        // Получить Unit
+        for (DataSnapshot child : dataMain.child("Units").getChildren()){
+            if(Integer.parseInt(child.getKey())== plannedSchedule.getListService().getSocialService().getTarif().getSocialServiceUnit()){
+                Unit unit = parserUnit(child);
+                plannedSchedule.getListService().getSocialService().getTarif().setUnit(unit);
+                break;
+            }
+        }
 
     }
 

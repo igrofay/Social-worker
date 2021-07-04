@@ -5,8 +5,8 @@ import android.os.Parcelable;
 
 // Единица измерения социальных уcлуг, справочник
 public class Unit implements Parcelable {
-    int unitID ;
-    String unitNAME ;
+    private int unitID ;
+    private String unitNAME ;
 
     public Unit(){}
     protected Unit(Parcel in) {
@@ -35,5 +35,21 @@ public class Unit implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(unitID);
         dest.writeString(unitNAME);
+    }
+
+    public int getUnitID() {
+        return unitID;
+    }
+
+    public void setUnitID(int unitID) {
+        this.unitID = unitID;
+    }
+
+    public String getUnitNAME() {
+        return unitNAME;
+    }
+
+    public void setUnitNAME(String unitNAME) {
+        this.unitNAME = unitNAME;
     }
 }

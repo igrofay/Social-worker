@@ -1,9 +1,11 @@
 package com.example.socialworker.fragments.welcome;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -11,12 +13,27 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.socialworker.MainActivity;
 import com.example.socialworker.R;
+import com.example.socialworker.WelcomeActivity;
+import com.example.socialworker.entity.SocialWorker;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.EventListener;
 
 import static com.example.socialworker.WelcomeActivity.APP_PREFERENCES;
 import static com.example.socialworker.WelcomeActivity.LOGIN_CASEWORKER;
+import static com.example.socialworker.WelcomeActivity.PASSWORD_CASEWORKER;
 
 
 public class DownloadFragment extends Fragment {
@@ -25,10 +42,9 @@ public class DownloadFragment extends Fragment {
         super.onCreate(savedInstanceState);
         SharedPreferences preferences = (requireActivity()).getSharedPreferences(APP_PREFERENCES , Context.MODE_PRIVATE) ;
         String login = preferences.getString(LOGIN_CASEWORKER , null);
-        if( login == null){
-            NavHostFragment.findNavController(this).navigate(R.id.action_downloadFragment_to_authorizationFragment);
-        }
-        String password = preferences.getString(LOGIN_CASEWORKER , "");
+        String password = preferences.getString(PASSWORD_CASEWORKER , "");
+        if( login == null) NavHostFragment.findNavController(this).navigate(R.id.authorizationFragment);
+        else authorization(login , password);
 
     }
 
@@ -37,4 +53,46 @@ public class DownloadFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_download, container, false);
     }
+
+    void finishActivity(){
+        Intent intent = new Intent(requireActivity() , MainActivity.class);
+        startActivity(intent);
+        requireActivity().finish();
+    }
+    void authorization(String log , String password){
+        FirebaseDatabase firebaseApp = FirebaseDatabase.getInstance();
+        firebaseApp.getReference("SocialWorkers").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot child: snapshot.getChildren()){
+                    String logData = child.child("SocialWorkerLogin").getValue().toString();
+                    String passwordData = child.child("SocialWorkerPassword").getValue().toString();
+                    if(log.equals(logData) && password.equals(passwordData)){
+                        ((WelcomeActivity) requireActivity()).socialWorker = parserSocialWorker(child);
+                        return;
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    SocialWorker parserSocialWorker(DataSnapshot data){
+        SocialWorker socialWorker = new SocialWorker();
+        socialWorker.setSocialWorkerID(Integer.parseInt(data.getKey()));
+        socialWorker.setSocialWorkerDepartment(data.child("SocialWorkerDepartment").toString());
+        socialWorker.setSocialWorkerFIO(data.child("SocialWorkerFIO").toString());
+        socialWorker.setSocialWorkerLogin(data.child("SocialWorkerLogin").toString());
+        socialWorker.setSocialWorkerOrganization(data.child("SocialWorkerOrganization").toString());
+        socialWorker.setSocialWorkerPassword(data.child("SocialWorkerPassword").toString());
+        socialWorker.setSocialWorkerPosition(data.child("SocialWorkerPosition").toString());
+        return socialWorker;
+    }
+
 }

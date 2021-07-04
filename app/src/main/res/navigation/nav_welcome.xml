@@ -9,11 +9,7 @@
         android:id="@+id/downloadFragment"
         android:name="com.example.socialworker.fragments.welcome.DownloadFragment"
         android:label="fragment_download"
-        tools:layout="@layout/fragment_download" >
-        <action
-            android:id="@+id/action_downloadFragment_to_authorizationFragment"
-            app:destination="@id/authorizationFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_download" />
     <fragment
         android:id="@+id/authorizationFragment"
         android:name="com.example.socialworker.fragments.welcome.AuthorizationFragment"

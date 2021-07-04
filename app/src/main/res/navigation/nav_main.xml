@@ -24,4 +24,9 @@
         android:name="com.example.socialworker.fragments.main.FullInformationFragment"
         android:label="fragment_full_information"
         tools:layout="@layout/fragment_full_information" />
+    <fragment
+        android:id="@+id/activeWorkFragment"
+        android:name="com.example.socialworker.fragments.main.ActiveWorkFragment"
+        android:label="fragment_active_work"
+        tools:layout="@layout/fragment_active_work" />
 </navigation>

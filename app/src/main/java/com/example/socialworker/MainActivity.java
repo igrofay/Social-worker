@@ -8,28 +8,23 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 
+import com.example.socialworker.entity.SocialWorker;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+import static com.example.socialworker.WelcomeActivity.SOCIAL_WORKER;
 
+public class MainActivity extends AppCompatActivity {
+    SocialWorker socialWorker ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        socialWorker = getIntent().getParcelableExtra(SOCIAL_WORKER);
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.profileFragment, R.id.plannedSchedulsFragment, R.id.activeWorkFragment)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavController navController = Navigation.findNavController(this, R.id.fragment_main);
         NavigationUI.setupWithNavController(navView, navController);
 
 
     }
 
-
-    // Проверка данных( Логин и пароль)
-    // Отправка Get запрос (true)
-    // Отправка черз NavHost на авторизация (false)
 }

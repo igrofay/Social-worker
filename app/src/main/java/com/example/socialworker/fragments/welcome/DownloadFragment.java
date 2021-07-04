@@ -31,6 +31,7 @@ import org.json.JSONObject;
 
 import java.util.EventListener;
 
+import static com.example.socialworker.Parser.parserSocialWorker;
 import static com.example.socialworker.WelcomeActivity.APP_PREFERENCES;
 import static com.example.socialworker.WelcomeActivity.LOGIN_CASEWORKER;
 import static com.example.socialworker.WelcomeActivity.PASSWORD_CASEWORKER;
@@ -68,7 +69,9 @@ public class DownloadFragment extends Fragment {
                     String logData = child.child("SocialWorkerLogin").getValue().toString();
                     String passwordData = child.child("SocialWorkerPassword").getValue().toString();
                     if(log.equals(logData) && password.equals(passwordData)){
-                        ((WelcomeActivity) requireActivity()).socialWorker = parserSocialWorker(child);
+                        SocialWorker socialWorker = parserSocialWorker(child);
+                        ((WelcomeActivity) requireActivity()).socialWorker = socialWorker;
+                        downloadAllData(socialWorker);
                         return;
                     }
 
@@ -83,16 +86,9 @@ public class DownloadFragment extends Fragment {
         });
     }
 
-    SocialWorker parserSocialWorker(DataSnapshot data){
-        SocialWorker socialWorker = new SocialWorker();
-        socialWorker.setSocialWorkerID(Integer.parseInt(data.getKey()));
-        socialWorker.setSocialWorkerDepartment(data.child("SocialWorkerDepartment").toString());
-        socialWorker.setSocialWorkerFIO(data.child("SocialWorkerFIO").toString());
-        socialWorker.setSocialWorkerLogin(data.child("SocialWorkerLogin").toString());
-        socialWorker.setSocialWorkerOrganization(data.child("SocialWorkerOrganization").toString());
-        socialWorker.setSocialWorkerPassword(data.child("SocialWorkerPassword").toString());
-        socialWorker.setSocialWorkerPosition(data.child("SocialWorkerPosition").toString());
-        return socialWorker;
+    void downloadAllData(SocialWorker socialWorker){
+
     }
+
 
 }

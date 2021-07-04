@@ -52,6 +52,10 @@ public class AdapterPlannedSchedule extends RecyclerView.Adapter<AdapterPlannedS
             stat = itemView.findViewById(R.id.view_inf_stat);
         }
         void setValue(PlannedSchedule plannedSchedule){
+
+            name.setText(
+                    plannedSchedule.getListService().getSocialService().getSocialServiceNAME()
+            );
             String dataStr = plannedSchedule.getScheduleStartPlanned()+ " - " + plannedSchedule.getScheduleEndPlanned();
             data.setText(dataStr);
             recip.setText(plannedSchedule.getRecipient().getRecipientFIO());

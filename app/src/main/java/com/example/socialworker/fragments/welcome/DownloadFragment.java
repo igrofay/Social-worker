@@ -129,8 +129,8 @@ public class DownloadFragment extends Fragment {
         }
         // Получить ListService
         for (DataSnapshot child: dataMain.child("ListServices").getChildren()){
-            int id_ListService = Integer.parseInt(child.child("ServicePlannedSchedule").getValue().toString());
-            if(id_ListService==plannedSchedule.getScheduleRecipient()){
+            int id_ServicePlannedSchedule = Integer.parseInt(child.getKey());
+            if( id_ServicePlannedSchedule  == plannedSchedule.getScheduleID()){
                 ListService listService = parserListService(child);
                 plannedSchedule.setListService(listService);
                 break;
